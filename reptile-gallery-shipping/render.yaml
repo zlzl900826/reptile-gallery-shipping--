@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: reptile-gallery-shipping
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false
