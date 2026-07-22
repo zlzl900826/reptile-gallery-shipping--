@@ -1,3 +1,22 @@
+# Reptile Gallery v31 - 루트 직접 업로드용
+
+이번 파일은 현재 Render 설정에 맞춘 버전입니다.
+
+Render 설정:
+```text
+Build Command: npm install
+Start Command: npm start
+```
+
+배포 성공 로그:
+```text
+reptile-gallery-shipping@1.0.31 start
+정적 파일 위치: /opt/render/project/src/public
+렙타일갤러리 결제/수령 신청 사이트가 실행되었습니다. v31-root-direct-csv-fixed
+```
+
+관리자 페이지에서 `v31 CSV 업로드 기능 적용됨`이 보여야 정상입니다.
+
 # Reptile Gallery 결제/수령 신청 사이트 v30 - CSV 업로드 최종본
 
 관리자 페이지에 CSV 업로드 / 백업 복구 기능이 추가되었습니다.

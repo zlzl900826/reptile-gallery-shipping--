@@ -8,14 +8,39 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'rg2026!';
-const APP_VERSION = 'v30-csv-import';
+const APP_VERSION = 'v31-root-direct-csv-fixed';
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
 console.log(`데이터 저장 위치: ${DB_PATH}`);
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+
+const PUBLIC_DIR_CANDIDATES = [
+  path.join(__dirname, 'public'),
+  path.join(__dirname, 'reptile-gallery-shipping', 'public')
+];
+const PUBLIC_DIR = PUBLIC_DIR_CANDIDATES.find((dir) => fs.existsSync(path.join(dir, 'index.html'))) || path.join(__dirname, 'public');
+console.log(`정적 파일 위치: ${PUBLIC_DIR}`);
+
+app.use(express.static(PUBLIC_DIR));
+
+app.get('/', (req, res) => {
+  const indexPath = path.join(PUBLIC_DIR, 'index.html');
+  if (!fs.existsSync(indexPath)) {
+    return res.status(500).send(`index.html 파일을 찾지 못했습니다. PUBLIC_DIR=${PUBLIC_DIR}`);
+  }
+  res.sendFile(indexPath);
+});
+
+app.get('/admin.html', (req, res) => {
+  const adminPath = path.join(PUBLIC_DIR, 'admin.html');
+  if (!fs.existsSync(adminPath)) {
+    return res.status(500).send(`admin.html 파일을 찾지 못했습니다. PUBLIC_DIR=${PUBLIC_DIR}`);
+  }
+  res.sendFile(adminPath);
+});
+
 
 function readDb() {
   if (!fs.existsSync(DB_PATH)) return { settings: {}, bidders: [] };
@@ -796,7 +821,7 @@ app.get('/api/admin/export.csv', requireAdmin, (req, res) => {
 });
 
 app.get('/health', (req, res) => res.json({ ok: true, version: APP_VERSION, dbPath: DB_PATH }));
-app.get('/api/version', (req, res) => res.json({ version: APP_VERSION, dbPath: DB_PATH }));
+app.get('/api/version', (req, res) => res.json({ version: APP_VERSION, publicDir: PUBLIC_DIR, dbPath: DB_PATH }));
 
 function getLanUrls(port) {
   const interfaces = os.networkInterfaces();
