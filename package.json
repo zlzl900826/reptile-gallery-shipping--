@@ -1,6 +1,6 @@
 {
   "name": "reptile-gallery-shipping",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "Reptile Gallery auction payment pickup and Dodosi station registration web app",
   "main": "server.js",
   "scripts": {

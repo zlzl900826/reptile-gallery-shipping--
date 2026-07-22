@@ -1,3 +1,19 @@
+# Reptile Gallery v32 - 내장파일 안전버전
+
+이 버전은 `public/index.html`이 업로드에서 빠져도 server.js 안에 내장된 화면 파일로 사이트가 열립니다.
+
+Render 설정:
+```text
+Build Command: npm install
+Start Command: npm start
+```
+
+성공 로그:
+```text
+reptile-gallery-shipping@1.0.32 start
+렙타일갤러리 결제/수령 신청 사이트가 실행되었습니다. v32-embedded-public-csv
+```
+
 # Reptile Gallery v31 - 루트 직접 업로드용
 
 이번 파일은 현재 Render 설정에 맞춘 버전입니다.
